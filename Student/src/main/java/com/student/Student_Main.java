@@ -1,4 +1,5 @@
-package com.student;
+package com.Student;
+
 import java.util.List;
 import java.util.Optional;
 import org.hibernate.HibernateException;
@@ -6,7 +7,6 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 public class Student_Main {
-
 public static void main(String[] args) {
 	 EntityManagerFactory factory =null;	
   try {
@@ -40,9 +40,56 @@ public static void main(String[] args) {
 	List<Student> all = s.getAll();
 	System.out.println(all);
 	System.out.println("------------------------------------------------------------");
-	System.out.println("Removing student details based on id");	
-	s.removeById(1);
+	System.out.println(" 1st Record is Removed based  on id");
+	System.out.println(" Data removed successfully  ");
+	s.removeById(2);
+	Course c1 = new Course();
+	  c1.setCourseName("Java Programming");
+	  c1.setCourseCode("CS101");
+
+	  Course c2 = new Course();
+	  c2.setCourseName("Database Management");
+	  c2.setCourseCode("DB101");
+
+	  Course c3 = new Course();
+	  c3.setCourseName("Web Development");
+	  c3.setCourseCode("WD101");
+
+	  CourseDAO courseDAO = new CourseDAO(em);
+
+	  // Adding courses
+	  courseDAO.createCourse(c1);
+	  courseDAO.createCourse(c2);
+	  courseDAO.createCourse(c3);
+
+	  System.out.println("Course details successfully added");
+	  System.out.println("----------------------------------------------------------------");
+
+	  // Updating course details
+	  int newCourseId = 3;
+	  String newCourseName = "Advanced Web Development";
+	  String newCourseCode = "AWD101";
+	  courseDAO.updateCourse(newCourseId, newCourseName, newCourseCode);
+	  System.out.println("------------------------------------------------------------");
+
+	  // Retrieving course details based on ID
+	  System.out.println("Course details based on ID");
+	  Optional<Course> courseDetails = courseDAO.getById(2);
+	  System.out.println(courseDetails);
+	  System.out.println("------------------------------------------------------------");
+
+	  // Retrieving all courses
+	  System.out.println("All course details");
+	  List<Course> allCourses = courseDAO.getAll();
+	  System.out.println(allCourses);
+	  System.out.println("------------------------------------------------------------");
+
+	  // Removing a course by ID
+	  System.out.println("Removing 1st course based on ID");
+	  System.out.println("Data removed successfully");
+	  courseDAO.removeById(1);
    }
+
   catch (HibernateException e) {
 		 e.printStackTrace();
 	}
